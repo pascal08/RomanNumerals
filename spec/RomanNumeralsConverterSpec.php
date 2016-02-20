@@ -123,9 +123,14 @@ class RomanNumeralsConverterSpec extends ObjectBehavior
         $this->convertToNumber('X')->shouldReturn(10);
     }
 
-    function it_translates_the_numeral_XIX_into_a_number()
+    function it_translates_the_numeral_MDCCCCLXXXXVIIII_into_a_number()
     {
-        $this->convertToNumber('XIX')->shouldReturn(19);
+        $this->convertToNumber('MDCCCCLXXXXVIIII')->shouldReturn(1999);
+    }
+
+    function it_translates_the_numeral_MIM_into_a_number()
+    {
+        $this->convertToNumber('MIM')->shouldReturn(1999);
     }
 
     function it_adds_two_roman_numerals()

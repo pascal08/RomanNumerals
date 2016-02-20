@@ -43,12 +43,12 @@ class RomanNumeralsConverter
 
     public function addRomanNumerals($romans)
     {
-        if(!is_array($romans))
+        if (!is_array($romans))
         {
             throw new \InvalidArgumentException;
         }
 
-        return array_sum(array_map(array($this, 'convertToNumber'), $romans));
+        return array_sum(array_map([$this, 'convertToNumber'], $romans));
     }
 
 
@@ -105,31 +105,22 @@ class RomanNumeralsConverter
     {
         $this->validateRoman($roman);
 
-        $solution = 0;
+        $chars = str_split(strrev($roman));
 
-        $chars = str_split($roman);
+        $curr = current($chars);
 
-        $length = count($chars);
+        $solution = static::$numbers[$curr];
 
-        for ($i = 0; $i < $length; $i++)
+        while ($next = next($chars))
         {
-            if (!isset($chars[$i + 1]))
+            if (static::$numbers[$next] < static::$numbers[$curr])
             {
-                $solution += static::$numbers[$chars[$i]];
-
-                break;
-            }
-
-            if (static::$numbers[$chars[$i]] >= static::$numbers[$chars[$i + 1]])
-            {
-                $solution += static::$numbers[$chars[$i]];
+                $solution -= static::$numbers[$next];
 
                 continue;
             }
 
-            $solution += static::$numbers[$chars[$i + 1]] - static::$numbers[$chars[$i]];
-
-            $i++;
+            $solution += static::$numbers[$next];
         }
 
         return $solution;
